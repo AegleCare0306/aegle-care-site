@@ -5,31 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aegle Care — Coming soon</title>
 <meta name="description" content="Aegle Care — an integrated medical records and patient engagement platform for doctors and clinics. Built ABDM-native. By Mednova Health LLP, Ahmedabad.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23174542'/><text x='14' y='24' font-family='Georgia,serif' font-size='22' fill='%23E1DDD3' text-anchor='middle'>A</text><circle cx='26' cy='23' r='2.6' fill='%23CC9C31'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23154540'/><text x='14' y='24' font-family='Verdana,sans-serif' font-size='20' font-weight='bold' fill='%23E0DED1' text-anchor='middle'>A</text><circle cx='26' cy='23' r='2.6' fill='%23CD9D30'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
   /* ---------------------------------------------------------------
-     Palette
-       #E1DDD3  sand   — headings, wordmark
-       #CC9C31  ochre  — accent: eyebrow, CTA, wordmark dot
-       #9DA496  sage   — secondary text, labels
-       #174542  pine   — brand ground
-     #0E2E2B is a darker shade of pine, used as the page base so sage
-     and ochre clear WCAG AA against it.
+     Brand palette — exact values from "Aegle Care - Color Palette.pdf",
+     option 2 (Quicksand):
+       #CD9D30  gold   — accent
+       #154540  pine   — brand ground
+       #E0DED1  sand   — headings and wordmark
+
+     Two tones are derived, because the palette supplies no page base
+     dark enough and no mid-tone for secondary text:
+       #133D39  base   — pine darkened until the gold clears WCAG AA.
+                         On raw #154540 the gold is only 4.32:1; here
+                         it is 4.82:1.
+       #A0ACA2  sage   — sand blended toward the base, 5.08:1.
   ---------------------------------------------------------------- */
   :root {
-    --deep:  #0E2E2B;
-    --pine:  #174542;
-    --gold:  #CC9C31;
-    --sage:  #9DA496;
-    --sand:  #E1DDD3;
-    --rule:  rgba(225, 221, 211, 0.16);
+    --deep:  #133D39;
+    --pine:  #154540;
+    --gold:  #CD9D30;
+    --sage:  #A0ACA2;
+    --sand:  #E0DED1;
+    --dark:  #0C2825;
+    --field: #103632;
+    --rule:  rgba(224, 222, 209, 0.16);
 
-    --sans:  "Public Sans", "Helvetica Neue", Arial, sans-serif;
-    --serif: "Newsreader", Georgia, serif;
-    --mono:  "IBM Plex Mono", Consolas, monospace;
+    --face: "Quicksand", "Trebuchet MS", "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", Consolas, monospace;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -40,6 +46,7 @@
      sets `display: grid`, which left the form visible after a
      successful submit. !important settles it for every case. */
   [hidden] { display: none !important; }
+
   body {
     margin: 0;
     min-height: 100vh;
@@ -47,7 +54,7 @@
     flex-direction: column;
     background: var(--deep);
     color: var(--sand);
-    font-family: var(--sans);
+    font-family: var(--face);
     line-height: 1.6;
     isolation: isolate;
   }
@@ -64,9 +71,9 @@
     z-index: -1;
     background-color: var(--deep);
     background-image:
-      radial-gradient(120% 90% at 78% 10%, rgba(204, 156, 49, 0.20) 0%, rgba(204, 156, 49, 0) 55%),
-      radial-gradient(100% 85% at 6% 94%, rgba(157, 164, 150, 0.20) 0%, rgba(157, 164, 150, 0) 62%),
-      linear-gradient(160deg, #1D5551 0%, #174542 52%, #0C2724 100%);
+      radial-gradient(120% 90% at 78% 10%, rgba(205, 157, 48, 0.20) 0%, rgba(205, 157, 48, 0) 55%),
+      radial-gradient(100% 85% at 6% 94%, rgba(160, 172, 162, 0.20) 0%, rgba(160, 172, 162, 0) 62%),
+      linear-gradient(160deg, #2C5853 0%, #154540 52%, #0C2825 100%);
     background-size: cover;
     background-position: center;
   }
@@ -82,7 +89,7 @@
   }
 
   /* Two scrims. The horizontal one keeps the left column — where all the
-     text sits — dark enough for sage and ochre to clear WCAG AA over the
+     text sits — dark enough for sage and gold to clear WCAG AA over the
      photo's bright areas, while the right side keeps the photo at full
      strength. The vertical one seats the top bar and footer. */
   .backdrop::before {
@@ -92,14 +99,14 @@
     z-index: 1;
     background:
       linear-gradient(100deg,
-        rgba(12,39,36,0.72) 0%,
-        rgba(12,39,36,0.62) 40%,
-        rgba(12,39,36,0.20) 72%,
-        rgba(12,39,36,0.06) 100%),
+        rgba(12,40,37,0.74) 0%,
+        rgba(12,40,37,0.64) 40%,
+        rgba(12,40,37,0.20) 72%,
+        rgba(12,40,37,0.06) 100%),
       linear-gradient(180deg,
-        rgba(14,46,43,0.62) 0%,
-        rgba(14,46,43,0.38) 45%,
-        rgba(12,39,36,0.88) 100%);
+        rgba(12,40,37,0.62) 0%,
+        rgba(12,40,37,0.38) 45%,
+        rgba(12,40,37,0.88) 100%);
   }
 
   /* Narrow screens: text runs full width, so the scrim must be even. */
@@ -107,9 +114,9 @@
     .backdrop::before {
       background:
         linear-gradient(180deg,
-          rgba(12,39,36,0.80) 0%,
-          rgba(12,39,36,0.72) 45%,
-          rgba(12,39,36,0.90) 100%);
+          rgba(12,40,37,0.80) 0%,
+          rgba(12,40,37,0.72) 45%,
+          rgba(12,40,37,0.90) 100%);
     }
   }
 
@@ -122,8 +129,8 @@
     gap: 1rem; padding-top: 1.15rem; padding-bottom: 1.15rem;
   }
   .brand {
-    font-family: var(--sans); font-size: 1.15rem; font-weight: 600;
-    letter-spacing: -0.02em; margin: 0; color: var(--sand);
+    font-family: var(--face); font-size: 1.2rem; font-weight: 700;
+    letter-spacing: -0.01em; margin: 0; color: var(--sand);
   }
   .brand span { color: var(--gold); }
   .topbar a {
@@ -144,17 +151,19 @@
   }
   .eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
   h1 {
-    font-family: var(--serif); font-weight: 400;
-    font-size: clamp(2.2rem, 6.4vw, 3.6rem); line-height: 1.08;
-    letter-spacing: -0.022em; text-wrap: balance; margin: 0 0 1.25rem;
+    font-family: var(--face); font-weight: 600;
+    font-size: clamp(2.1rem, 6.2vw, 3.4rem); line-height: 1.14;
+    letter-spacing: -0.02em; text-wrap: balance; margin: 0 0 1.25rem;
     color: var(--sand);
   }
-  h1 em { font-style: italic; color: var(--gold); }
+  /* Quicksand ships no italic, so a synthetic slant would be applied.
+     Weight and colour carry the emphasis instead. */
+  h1 em { font-style: normal; font-weight: 700; color: var(--gold); }
   .lede { font-size: 1.0625rem; color: var(--sage); margin: 0 0 2rem; max-width: 34rem; }
 
   .cta {
     display: inline-block; font-family: var(--mono); font-size: 0.875rem;
-    color: #0C2724; background: var(--gold); text-decoration: none;
+    color: var(--dark); background: var(--gold); text-decoration: none;
     padding: 0.7rem 1.15rem; border: 1px solid var(--gold);
     cursor: pointer;
     transition: background 0.15s ease, color 0.15s ease;
@@ -162,7 +171,7 @@
   .cta:hover { background: transparent; color: var(--gold); }
   .cta:focus-visible { outline: 2px solid var(--sand); outline-offset: 3px; }
   .cta[disabled] { opacity: 0.6; cursor: default; }
-  .cta[disabled]:hover { background: var(--gold); color: #0C2724; }
+  .cta[disabled]:hover { background: var(--gold); color: var(--dark); }
 
   /* --- feature strip --- */
   .strip { border-top: 1px solid var(--rule); }
@@ -191,18 +200,18 @@
     width: min(30rem, calc(100% - 2rem));
     max-height: calc(100vh - 2rem);
     color: var(--sand);
-    background: #10322F;
-    border: 1px solid rgba(157, 164, 150, 0.30);
+    background: #123A36;
+    border: 1px solid rgba(160, 172, 162, 0.30);
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
   }
-  .modal::backdrop { background: rgba(7, 24, 22, 0.74); }
+  .modal::backdrop { background: rgba(8, 26, 24, 0.74); }
 
   .modal-inner { padding: clamp(1.5rem, 4vw, 2rem); display: grid; gap: 1.1rem; }
 
   .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
   .modal-title {
-    font-family: var(--serif); font-weight: 400; font-size: 1.45rem;
-    line-height: 1.2; letter-spacing: -0.015em; margin: 0; color: var(--sand);
+    font-family: var(--face); font-weight: 600; font-size: 1.4rem;
+    line-height: 1.25; letter-spacing: -0.015em; margin: 0; color: var(--sand);
   }
   .modal-sub { font-size: 0.9375rem; color: var(--sage); margin: 0.4rem 0 0; }
 
@@ -222,16 +231,16 @@
     text-transform: uppercase; color: var(--sage);
   }
   .field input {
-    font-family: var(--sans); font-size: 0.9375rem; color: var(--sand);
+    font-family: var(--face); font-size: 0.9375rem; color: var(--sand);
     /* Opaque, not rgba(). A translucent field lets the browser's own
        autofill background show through from behind. */
-    background: #0F3330;
-    border: 1px solid rgba(157, 164, 150, 0.40);
+    background: var(--field);
+    border: 1px solid rgba(160, 172, 162, 0.40);
     padding: 0.62rem 0.7rem; width: 100%;
     transition: border-color 0.15s ease;
   }
-  .field input::placeholder { color: rgba(157, 164, 150, 0.65); }
-  .field input:hover { border-color: rgba(157, 164, 150, 0.65); }
+  .field input::placeholder { color: rgba(160, 172, 162, 0.65); }
+  .field input:hover { border-color: rgba(160, 172, 162, 0.65); }
   .field input:focus-visible {
     outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold);
   }
@@ -246,8 +255,8 @@
   .field input:-webkit-autofill:focus,
   .field input:-webkit-autofill:active {
     -webkit-text-fill-color: var(--sand) !important;
-    -webkit-box-shadow: 0 0 0 100px #0F3330 inset !important;
-    box-shadow: 0 0 0 100px #0F3330 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #103632 inset !important;
+    box-shadow: 0 0 0 100px #103632 inset !important;
     caret-color: var(--sand) !important;
     transition: background-color 100000s ease-in-out 0s !important;
   }
@@ -259,11 +268,12 @@
   .field input:autofill:focus,
   .field input:autofill:active {
     -webkit-text-fill-color: var(--sand) !important;
-    -webkit-box-shadow: 0 0 0 100px #0F3330 inset !important;
-    box-shadow: 0 0 0 100px #0F3330 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #103632 inset !important;
+    box-shadow: 0 0 0 100px #103632 inset !important;
     caret-color: var(--sand) !important;
     transition: background-color 100000s ease-in-out 0s !important;
   }
+
   .signup .cta { justify-self: start; }
   .form-note { font-family: var(--mono); font-size: 0.6875rem; color: var(--sage); margin: 0; }
 
@@ -272,7 +282,7 @@
     border-left: 2px solid var(--gold); padding-left: 0.9rem;
   }
   .form-status.is-error { border-left-color: #C9765A; }
-  .form-status strong { font-weight: 600; }
+  .form-status strong { font-weight: 700; }
   .form-status a { color: var(--gold); text-underline-offset: 3px; }
 
   .modal[open] { animation: modal-in 0.18s ease-out; }
