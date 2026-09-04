@@ -33,6 +33,13 @@
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
+
+  /* Must come before any rule that sets `display`. The browser hides
+     [hidden] elements with `display: none`, but that is a user-agent
+     rule, so ANY author rule setting display beats it — .signup below
+     sets `display: grid`, which left the form visible after a
+     successful submit. !important settles it for every case. */
+  [hidden] { display: none !important; }
   body {
     margin: 0;
     min-height: 100vh;
@@ -216,7 +223,9 @@
   }
   .field input {
     font-family: var(--sans); font-size: 0.9375rem; color: var(--sand);
-    background: rgba(12, 39, 36, 0.55);
+    /* Opaque, not rgba(). A translucent field lets the browser's own
+       autofill background show through from behind. */
+    background: #0F3330;
     border: 1px solid rgba(157, 164, 150, 0.40);
     padding: 0.62rem 0.7rem; width: 100%;
     transition: border-color 0.15s ease;
@@ -234,12 +243,26 @@
      colour flashing in before the shadow lands. */
   .field input:-webkit-autofill,
   .field input:-webkit-autofill:hover,
-  .field input:-webkit-autofill:focus {
-    -webkit-text-fill-color: var(--sand);
-    -webkit-box-shadow: 0 0 0 100px #0F3330 inset;
-    box-shadow: 0 0 0 100px #0F3330 inset;
-    caret-color: var(--sand);
-    transition: background-color 100000s ease-in-out 0s;
+  .field input:-webkit-autofill:focus,
+  .field input:-webkit-autofill:active {
+    -webkit-text-fill-color: var(--sand) !important;
+    -webkit-box-shadow: 0 0 0 100px #0F3330 inset !important;
+    box-shadow: 0 0 0 100px #0F3330 inset !important;
+    caret-color: var(--sand) !important;
+    transition: background-color 100000s ease-in-out 0s !important;
+  }
+  /* Unprefixed form of the same pseudo-class, split into its own rule:
+     a browser that does not understand :autofill would otherwise throw
+     away the whole selector list above, including the -webkit- one. */
+  .field input:autofill,
+  .field input:autofill:hover,
+  .field input:autofill:focus,
+  .field input:autofill:active {
+    -webkit-text-fill-color: var(--sand) !important;
+    -webkit-box-shadow: 0 0 0 100px #0F3330 inset !important;
+    box-shadow: 0 0 0 100px #0F3330 inset !important;
+    caret-color: var(--sand) !important;
+    transition: background-color 100000s ease-in-out 0s !important;
   }
   .signup .cta { justify-self: start; }
   .form-note { font-family: var(--mono); font-size: 0.6875rem; color: var(--sage); margin: 0; }
@@ -420,6 +443,10 @@
       })
         .then(function (res) {
           if (!res.ok) throw new Error(res.status);
+          /* Restore the button before hiding, so the form is never left
+             frozen on "Sending…" if hiding it somehow fails. */
+          button.disabled = false;
+          button.textContent = original;
           form.hidden = true;
           done.hidden = false;
           done.setAttribute('tabindex', '-1');
